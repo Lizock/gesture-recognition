@@ -35,6 +35,13 @@
         }
         button.stop { background: #dc2626; }
         button:hover { opacity: 0.9; }
+        #box {
+            width: 100px;
+            height: 100px;
+            background-color: #3b82f6;
+            margin: 1rem auto;
+            transition: transform 0.5s ease;
+        }
     </style>
 </head>
 <body>
@@ -45,6 +52,7 @@
     <div id="webcam-container"></div>
     <div id="label-container"></div>
     <div id="message"></div>
+    <div id="box"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
@@ -127,6 +135,15 @@
                     messageEl.textContent = "Careful!";
             }else {
                 messageEl.textContent = "";
+            }
+
+            const box = document.getElementById("box");
+            if (topClass.className === "Thumbs Up" && topClass.probability > 0.7) {
+                box.style.transform = "translateX(-100px)";
+            } else if (topClass.className === "Thumbs Down" && topClass.probability > 0.7) {
+                box.style.transform = "translateX(100px)";
+            } else {
+                box.style.transform = "translateX(0)";
             }
         }
 
