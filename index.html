@@ -62,8 +62,13 @@
 
         let model, webcam, labelContainer, maxPredictions;
         let isRunning = false;
+        let gesture;
+        let score = 0;
 
         async function init() {
+
+            
+            gesture = await randomGesture();
             model = await tmImage.load(URL + "model.json", URL + "metadata.json");
             maxPredictions = model.getTotalClasses();
 
@@ -127,18 +132,24 @@
             }
 
             const messageEl = document.getElementById("message");
-            const gesture = await randomGesture();
             messageEl.textContent = `Simon says: ${gesture}`;
 
-            if (topClass.className === "Thumbs Up" && topClass.probability > 0.8) {
-                messageEl.textContent = "Good!";
-            } else if (topClass.className === "Thumbs Down" && topClass.probability > 0.8) {
-                messageEl.textContent = "Bad!";
-            } else if (topClass.className === "Open Hand" && topClass.probability > 0.8) {
-                    messageEl.textContent = "Careful!";
-            }else {
-                messageEl.textContent = "";
+            if (topClass.className === gesture && topClass.probability > 0.8) {
+                messageEl.textContent += "Correct!";
+                score++;
+            } else {
+                messageEl.textContent += " - Try Again!";
             }
+
+            // if (topClass.className === "Thumbs Up" && topClass.probability > 0.8) {
+            //     messageEl.textContent = "Good!";
+            // } else if (topClass.className === "Thumbs Down" && topClass.probability > 0.8) {
+            //     messageEl.textContent = "Bad!";
+            // } else if (topClass.className === "Open Hand" && topClass.probability > 0.8) {
+            //         messageEl.textContent = "Stop!";
+            // }else {
+            //     messageEl.textContent = "";
+            // }
 
             // Commenting this out for the game
             // const box = document.getElementById("box");
