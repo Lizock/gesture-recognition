@@ -35,13 +35,6 @@
         }
         button.stop { background: #dc2626; }
         button:hover { opacity: 0.9; }
-        /* #box {
-            width: 100px;
-            height: 100px;
-            background-color: #3b82f6;
-            margin: 1rem auto;
-            transition: transform 0.5s ease;
-        } */
     </style>
 </head>
 <body>
@@ -52,7 +45,7 @@
     <div id="webcam-container"></div>
     <div id="label-container"></div>
     <div id="message"></div>
-    <div id="box"></div>
+    <div id="score"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
@@ -67,7 +60,7 @@
 
         async function init() {
 
-            
+            document.getElementById("score").textContent = `Score: ${score}`;
             gesture = await randomGesture();
             model = await tmImage.load(URL + "model.json", URL + "metadata.json");
             maxPredictions = model.getTotalClasses();
@@ -135,8 +128,10 @@
             messageEl.textContent = `Simon says: ${gesture}`;
 
             if (topClass.className === gesture && topClass.probability > 0.8) {
-                messageEl.textContent += "Correct!";
+                messageEl.textContent += " - Correct!";
                 score++;
+                document.getElementById("score").textContent = `Score: ${score}`;
+                gesture = await randomGesture();
             } else {
                 messageEl.textContent += " - Try Again!";
             }
