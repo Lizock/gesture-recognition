@@ -12,6 +12,11 @@
             padding: 0 1rem;
             text-align: center;
         }
+        #webcam-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem;
+        }
         #webcam-container canvas {
             display: none;
             border-radius: 8px;
@@ -22,6 +27,16 @@
         #label-container div {
             font-size: 1.1rem;
             padding: 0.25rem 0;
+        }
+        #message {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        #score {
+            margin: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f5945c;
         }
         button {
             padding: 0.6rem 1.5rem;
@@ -52,8 +67,8 @@
 
     <div id="webcam-container"></div>
     <div id="label-container"></div>
-    <div id="message"></div>
     <div id="score"></div>
+    <div id="message"></div>
     <img id="feedback-image" src="" alt="feedback">
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
