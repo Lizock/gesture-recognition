@@ -52,7 +52,9 @@
 
     <div id="webcam-container"></div>
     <div id="label-container"></div>
-    <div id="message"></div>    <img id="feedback-image" src="" alt="feedback">    <div id="score"></div>
+    <div id="message"></div>
+    <div id="score"></div>
+    <img id="feedback-image" src="" alt="feedback">
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
@@ -64,8 +66,10 @@
         let isRunning = false;
         let gesture;
         let score = 0;
+        const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
         async function init() {
+            document.getElementById("score").textContent = `Score: ${score}`;
             gesture = randomGesture();
             model = await tmImage.load(URL + "model.json", URL + "metadata.json");
             maxPredictions = model.getTotalClasses();
@@ -135,11 +139,12 @@
             if (topClass.className === gesture && topClass.probability > 0.8) {
                 messageEl.textContent += " - Correct!";
                 score++;
+                document.getElementById("score").textContent = `Score: ${score}`;
                 gesture = randomGesture();
-                
-                const feedbackImg = document.getElementById("feedback-image");
+                 const feedbackImg = document.getElementById("feedback-image");
                 feedbackImg.src = "CelebratingDuck.png";
                 feedbackImg.classList.add("show");
+                await sleep(2500);
             } else {
                 messageEl.textContent += " - Try Again!";
                 
@@ -148,26 +153,6 @@
                 feedbackImg.classList.add("show");
             }
 
-            // if (topClass.className === "Thumbs Up" && topClass.probability > 0.8) {
-            //     messageEl.textContent = "Good!";
-            // } else if (topClass.className === "Thumbs Down" && topClass.probability > 0.8) {
-            //     messageEl.textContent = "Bad!";
-            // } else if (topClass.className === "Open Hand" && topClass.probability > 0.8) {
-            //         messageEl.textContent = "Stop!";
-            // }else {
-            //     messageEl.textContent = "";
-            // }
-
-            // Commenting this out for the game
-            // const box = document.getElementById("box");
-            // if (topClass.className === "Thumbs Up" && topClass.probability > 0.7) {
-            //     box.style.transform = "translateX(-100px)";
-            // } else if (topClass.className === "Thumbs Down" && topClass.probability > 0.7) {
-            //     box.style.transform = "translateX(100px)";
-            // } else {
-            //     box.style.transform = "translateX(0)";
-            // }
-            
         }
 
         function randomGesture() {
