@@ -116,9 +116,9 @@
             }
 
             if (topClass.className === "Thumbs Up" && topClass.probability > 0.8) {
-                document.body.style.backgroundColor = "#46bcf2"; // green
+                document.body.style.backgroundColor = "#46bcf2"; // blue
             } else if (topClass.className === "Thumbs Down" && topClass.probability > 0.8) {
-                document.body.style.backgroundColor = "#b66ff7"; // red
+                document.body.style.backgroundColor = "#b66ff7"; // purple
             }
             else if (topClass.className === "Open Hand" && topClass.probability > 0.8) {
                 document.body.style.backgroundColor = "#fff830"; // yellow
@@ -127,6 +127,9 @@
             }
 
             const messageEl = document.getElementById("message");
+            const gesture = await randomGesture();
+            messageEl.textContent = `Simon says: ${gesture}`;
+
             if (topClass.className === "Thumbs Up" && topClass.probability > 0.8) {
                 messageEl.textContent = "Good!";
             } else if (topClass.className === "Thumbs Down" && topClass.probability > 0.8) {
@@ -146,6 +149,13 @@
             // } else {
             //     box.style.transform = "translateX(0)";
             // }
+            
+        }
+
+        async function randomGesture() {
+            const gesture = ["Thumbs Up", "Thumbs Down", "Open Hand"];
+            
+            return gesture[Math.floor(Math.random() * gesture.length)];
         }
 
         async function toggleCamera() {
