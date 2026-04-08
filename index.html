@@ -137,14 +137,15 @@
                 messageEl.textContent = "";
             }
 
-            const box = document.getElementById("box");
-            if (topClass.className === "Thumbs Up" && topClass.probability > 0.7) {
-                box.style.transform = "translateX(-100px)";
-            } else if (topClass.className === "Thumbs Down" && topClass.probability > 0.7) {
-                box.style.transform = "translateX(100px)";
-            } else {
-                box.style.transform = "translateX(0)";
-            }
+            // Commenting this out for the game
+            // const box = document.getElementById("box");
+            // if (topClass.className === "Thumbs Up" && topClass.probability > 0.7) {
+            //     box.style.transform = "translateX(-100px)";
+            // } else if (topClass.className === "Thumbs Down" && topClass.probability > 0.7) {
+            //     box.style.transform = "translateX(100px)";
+            // } else {
+            //     box.style.transform = "translateX(0)";
+            // }
         }
 
         async function toggleCamera() {
