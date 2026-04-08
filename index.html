@@ -35,6 +35,14 @@
         }
         button.stop { background: #dc2626; }
         button:hover { opacity: 0.9; }
+        #feedback-image {
+            max-width: 200px;
+            margin: 1rem auto;
+            display: none;
+        }
+        #feedback-image.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -44,8 +52,7 @@
 
     <div id="webcam-container"></div>
     <div id="label-container"></div>
-    <div id="message"></div>
-    <div id="score"></div>
+    <div id="message"></div>    <img id="feedback-image" src="" alt="feedback">    <div id="score"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
@@ -59,9 +66,7 @@
         let score = 0;
 
         async function init() {
-
-            document.getElementById("score").textContent = `Score: ${score}`;
-            gesture = await randomGesture();
+            gesture = randomGesture();
             model = await tmImage.load(URL + "model.json", URL + "metadata.json");
             maxPredictions = model.getTotalClasses();
 
@@ -130,10 +135,17 @@
             if (topClass.className === gesture && topClass.probability > 0.8) {
                 messageEl.textContent += " - Correct!";
                 score++;
-                document.getElementById("score").textContent = `Score: ${score}`;
-                gesture = await randomGesture();
+                gesture = randomGesture();
+                
+                const feedbackImg = document.getElementById("feedback-image");
+                feedbackImg.src = "CelebratingDuck.png";
+                feedbackImg.classList.add("show");
             } else {
                 messageEl.textContent += " - Try Again!";
+                
+                const feedbackImg = document.getElementById("feedback-image");
+                feedbackImg.src = "AngryDuck.png";
+                feedbackImg.classList.add("show");
             }
 
             // if (topClass.className === "Thumbs Up" && topClass.probability > 0.8) {
@@ -158,9 +170,8 @@
             
         }
 
-        async function randomGesture() {
+        function randomGesture() {
             const gesture = ["Thumbs Up", "Thumbs Down", "Open Hand"];
-            
             return gesture[Math.floor(Math.random() * gesture.length)];
         }
 
