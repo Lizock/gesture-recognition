@@ -137,12 +137,12 @@
                 labelContainer.childNodes[i].innerHTML = classPrediction;
             }
 
-            if (topClass.className === "Thumbs Up" && topClass.probability > 0.8) {
+            if (topClass.className === "Thumbs Up" && topClass.probability > 0.85) {
                 document.body.style.backgroundColor = "#46bcf2"; // blue
-            } else if (topClass.className === "Thumbs Down" && topClass.probability > 0.8) {
+            } else if (topClass.className === "Thumbs Down" && topClass.probability > 0.85) {
                 document.body.style.backgroundColor = "#b66ff7"; // purple
             }
-            else if (topClass.className === "Open Hand" && topClass.probability > 0.8) {
+            else if (topClass.className === "Open Hand" && topClass.probability > 0.85) {
                 document.body.style.backgroundColor = "#fff830"; // yellow
             } else {
                 document.body.style.backgroundColor = "white";
@@ -151,7 +151,7 @@
             const messageEl = document.getElementById("message");
             messageEl.textContent = `Simon says: ${gesture}`;
 
-            if (topClass.className === gesture && topClass.probability > 0.8) {
+            if (topClass.className === gesture && topClass.probability > 0.85) {
                 messageEl.textContent += " - Correct!";
                 score++;
                 document.getElementById("score").textContent = `Score: ${score}`;
